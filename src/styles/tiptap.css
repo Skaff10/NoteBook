@@ -1,0 +1,220 @@
+/* Tiptap Editor Styling */
+.tiptap-container {
+  width: 100%;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.tiptap {
+  min-height: 400px;
+  outline: none;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  line-height: var(--sheet-line-height);
+  color: var(--ink);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.tiptap * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure pasted HTML backgrounds never cover the sheet texture/tint */
+.tiptap p,
+.tiptap div,
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap ul,
+.tiptap ol,
+.tiptap li,
+.tiptap table {
+  background-color: transparent !important;
+}
+
+.tiptap p {
+  margin: 0 0 8px 0;
+  line-height: var(--sheet-line-height);
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--muted);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.tiptap h1 {
+  font-family: var(--font-handwriting);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 16px 0 8px 0;
+  line-height: 1.3;
+}
+
+.tiptap h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 16px 0 6px 0;
+  line-height: 1.3;
+}
+
+.tiptap h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 12px 0 4px 0;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+  padding-left: 28px;
+  margin: 6px 0 10px 0;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+  padding-left: 28px;
+  margin: 6px 0 10px 0;
+}
+
+.tiptap li {
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.tiptap li > p {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Task lists (Checklists) */
+ul[data-type='taskList'] {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 4px 0 8px 0 !important;
+}
+
+li[data-type='taskItem'] {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 2px 0 !important;
+  padding: 0 !important;
+  min-height: 28px !important;
+}
+
+li[data-type='taskItem'] > label {
+  user-select: none;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+li[data-type='taskItem'] > label input[type='checkbox'] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--muted);
+  border-radius: 5px;
+  background-color: var(--surface);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  transition: all var(--transition-fast);
+}
+
+li[data-type='taskItem'] > label input[type='checkbox']:checked {
+  background-color: #6FB38F;
+  border-color: #6FB38F;
+}
+
+li[data-type='taskItem'] > label input[type='checkbox']:checked::before {
+  content: '✓';
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+li[data-type='taskItem'][data-checked='true'] > div > p {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+li[data-type='taskItem'] > div {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+li[data-type='taskItem'] > div > p {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Highlights */
+.tiptap mark {
+  border-radius: 4px;
+  padding: 1px 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Blockquotes */
+.tiptap blockquote {
+  border-left: 3px solid var(--muted);
+  margin: 12px 0;
+  padding: 4px 0 4px 16px;
+  color: var(--ink-secondary);
+  font-style: italic;
+  background: rgba(138, 135, 160, 0.05);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Code */
+.tiptap code {
+  background-color: var(--surface-alt);
+  border-radius: 4px;
+  font-size: 0.9em;
+  padding: 2px 6px;
+  font-family: monospace;
+  color: var(--pen-indigo);
+}
+
+.tiptap pre {
+  background: var(--surface-alt);
+  color: var(--ink);
+  font-family: monospace;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 12px 0;
+  border: 1px solid var(--border);
+}
+
+/* Horizontal Rule */
+.tiptap hr {
+  border: none;
+  border-top: 2px dashed var(--line-color);
+  margin: 24px 0;
+}

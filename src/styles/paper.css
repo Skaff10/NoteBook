@@ -1,0 +1,273 @@
+/* Paper styles */
+.paper-sheet {
+  position: relative;
+  width: 100%;
+  max-width: var(--sheet-width);
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-paper);
+  transition: min-height 0.2s ease, background-color 0.2s ease;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Light / subtle paper texture overlay */
+.paper-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 10;
+}
+
+[data-theme='night'] .paper-sheet::before {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Paper Styles: Lined */
+.paper-sheet.style-lined {
+  background-image: linear-gradient(to bottom, var(--line-color) 1px, transparent 1px);
+  background-size: 100% var(--sheet-line-height);
+  background-position: 0 4px;
+}
+
+/* Paper Styles: Dotted */
+.paper-sheet.style-dotted {
+  background-image: radial-gradient(var(--line-color) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  background-position: 12px 12px;
+}
+
+/* Paper Styles: Grid */
+.paper-sheet.style-grid {
+  background-image: 
+    linear-gradient(to right, var(--line-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line-color) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Paper Styles: Blank */
+.paper-sheet.style-blank {
+  background-image: none;
+}
+
+/* Paper Header with Handwritten Caveat Title */
+.paper-header {
+  padding: 36px 48px 12px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.paper-title-input {
+  font-family: var(--font-handwriting);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  width: 100%;
+  line-height: 1.2;
+  border-bottom: 2px dashed transparent;
+  transition: border-color var(--transition-fast);
+}
+
+.paper-title-input:hover,
+.paper-title-input:focus {
+  border-bottom-color: var(--muted);
+}
+
+.paper-title-input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.paper-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: var(--ink-secondary);
+  opacity: 0.8;
+}
+
+.paper-content {
+  position: relative;
+  padding: 0 48px 48px 48px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Book Mode Container & 3D Flip */
+.book-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  perspective: 2000px;
+}
+
+.book-scale-wrapper {
+  position: relative;
+  width: 820px;
+  height: 1100px;
+  transform-origin: center center;
+  transition: transform 0.2s ease;
+}
+
+.book-sheet-container {
+  width: 820px;
+  height: 1100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-paper);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.book-sheet-container.flipping-forward {
+  animation: flipForward 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: left center;
+  z-index: 20;
+}
+
+.book-sheet-container.flipping-backward {
+  animation: flipBackward 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: right center;
+  z-index: 20;
+}
+
+@keyframes flipForward {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.25);
+  }
+  100% {
+    transform: rotateY(-180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flipBackward {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.25);
+  }
+  100% {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-sheet-container.flipping-forward,
+  .book-sheet-container.flipping-backward {
+    animation: quickCrossfade 150ms ease forwards !important;
+  }
+}
+
+@keyframes quickCrossfade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Book navigation edge controls */
+.book-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 50;
+  transition: all var(--transition-fast);
+}
+
+.book-nav-btn:hover {
+  background: var(--surface-alt);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: var(--shadow-lg);
+}
+
+.book-nav-btn.prev {
+  left: 24px;
+}
+
+.book-nav-btn.next {
+  right: 24px;
+}
+
+/* Book indicator */
+.book-indicator {
+  position: absolute;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-full);
+  padding: 5px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  z-index: 40;
+  backdrop-filter: blur(4px);
+}
+
+/* Internal scroll container for fixed sheets */
+.fixed-sheet-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Overflow Warning Banner */
+.page-overflow-banner {
+  margin: 12px 48px 32px 48px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border: 1.5px dashed var(--pen-coral);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}

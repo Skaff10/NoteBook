@@ -1,0 +1,94 @@
+:root {
+  /* Fonts */
+  --font-ui: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-handwriting: 'Caveat', cursive, sans-serif;
+
+  /* Base Light Theme Tokens */
+  --bg-app: #F5F3FA;
+  --bg-sidebar: #FAF8FD;
+  --surface: #FFFFFF;
+  --surface-alt: #F0EDF7;
+  --ink: #3B3A4A;
+  --ink-secondary: #5E5B70;
+  --muted: #8A87A0;
+  --border: #E6E2F0;
+  --border-subtle: #EFEBF6;
+  --focus-ring: rgba(123, 127, 214, 0.45);
+
+  /* Paper & Notebook Tints */
+  --tint-mint: #BFE6D3;
+  --tint-peach: #FFD3C2;
+  --tint-butter: #FFF0B8;
+  --tint-sky: #BFDDF5;
+  --tint-lilac: #D9CCF2;
+  --tint-rose: #F6C6D8;
+  --tint-white: #FFFFFF;
+
+  /* Pen & Palette Colors */
+  --pen-ink: #3B3A4A;
+  --pen-rose: #E07A9B;
+  --pen-coral: #F0907A;
+  --pen-amber: #E9B44C;
+  --pen-sage: #6FB38F;
+  --pen-teal: #4FA6A6;
+  --pen-sky: #5B9BD5;
+  --pen-indigo: #7B7FD6;
+  --pen-lilac: #A98BD9;
+  --pen-brown: #9B7B65;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(59, 58, 74, 0.05);
+  --shadow-md: 0 4px 14px rgba(59, 58, 74, 0.08);
+  --shadow-lg: 0 10px 28px rgba(59, 58, 74, 0.12);
+  --shadow-paper: 0 6px 20px rgba(59, 58, 74, 0.08), 0 1px 3px rgba(59, 58, 74, 0.04);
+  --shadow-toolbar: 0 8px 24px rgba(59, 58, 74, 0.14);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Sheet Width */
+  --sheet-width: 820px;
+  --sheet-line-height: 32px;
+  --line-color: rgba(94, 91, 112, 0.12);
+  --line-margin-color: rgba(224, 122, 155, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* Night Theme (Soft dark plum, not pure black) */
+[data-theme='night'] {
+  --bg-app: #1D1824;
+  --bg-sidebar: #241E2C;
+  --surface: #2B2434;
+  --surface-alt: #362E42;
+  --ink: #F2EEF8;
+  --ink-secondary: #C8BFD6;
+  --muted: #958B9F;
+  --border: #3D3449;
+  --border-subtle: #332B3E;
+  --focus-ring: rgba(169, 139, 217, 0.5);
+
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-paper: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-toolbar: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --line-color: rgba(242, 238, 248, 0.1);
+  --line-margin-color: rgba(224, 122, 155, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
