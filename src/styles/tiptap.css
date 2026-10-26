@@ -98,14 +98,21 @@
   line-height: 1.4 !important;
 }
 
-/* Task lists (Checklists) */
-ul[data-type='taskList'] {
+/* Task lists (Checklists)
+   Tiptap v3 addNodeView sets data-checked on the li, NOT data-type.
+   So we target li[data-checked] which is always present. */
+
+/* The ul still gets data-type from renderHTML when serialised */
+.tiptap ul[data-type='taskList'],
+.tiptap ul:has(> li[data-checked]) {
   list-style: none !important;
   padding-left: 0 !important;
   margin: 4px 0 8px 0 !important;
 }
 
-li[data-type='taskItem'] {
+/* Make each task item a flex row so checkbox + text sit side-by-side */
+.tiptap li[data-checked],
+.tiptap li[data-type='taskItem'] {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -115,7 +122,9 @@ li[data-type='taskItem'] {
   min-height: 28px !important;
 }
 
-li[data-type='taskItem'] > label {
+/* Label (checkbox wrapper) — fixed small size, no grow */
+.tiptap li[data-checked] > label,
+.tiptap li[data-type='taskItem'] > label {
   user-select: none;
   display: inline-flex !important;
   align-items: center !important;
@@ -123,50 +132,63 @@ li[data-type='taskItem'] > label {
   cursor: pointer;
   margin: 0 !important;
   padding: 0 !important;
-  flex-shrink: 0 !important;
+  flex: 0 0 20px !important;
   width: 20px !important;
   height: 20px !important;
+  line-height: 1 !important;
 }
 
-li[data-type='taskItem'] > label input[type='checkbox'] {
+/* Custom checkbox appearance */
+.tiptap li[data-checked] > label input[type='checkbox'],
+.tiptap li[data-type='taskItem'] > label input[type='checkbox'] {
   appearance: none;
-  width: 18px;
-  height: 18px;
+  -webkit-appearance: none;
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  height: 18px !important;
   border: 2px solid var(--muted);
   border-radius: 5px;
   background-color: var(--surface);
   cursor: pointer;
-  display: grid;
+  display: grid !important;
   place-content: center;
-  margin: 0;
+  margin: 0 !important;
   transition: all var(--transition-fast);
 }
 
-li[data-type='taskItem'] > label input[type='checkbox']:checked {
+.tiptap li[data-checked] > label input[type='checkbox']:checked,
+.tiptap li[data-type='taskItem'] > label input[type='checkbox']:checked {
   background-color: #6FB38F;
   border-color: #6FB38F;
 }
 
-li[data-type='taskItem'] > label input[type='checkbox']:checked::before {
+.tiptap li[data-checked] > label input[type='checkbox']:checked::before,
+.tiptap li[data-type='taskItem'] > label input[type='checkbox']:checked::before {
   content: '✓';
   color: #FFFFFF;
   font-size: 11px;
   font-weight: bold;
 }
 
-li[data-type='taskItem'][data-checked='true'] > div > p {
-  text-decoration: line-through;
-  opacity: 0.65;
+/* Strikethrough text when checked */
+.tiptap li[data-checked='true'] > div p,
+.tiptap li[data-type='taskItem'][data-checked='true'] > div p {
+  text-decoration: line-through !important;
+  opacity: 0.55;
+  color: var(--muted);
 }
 
-li[data-type='taskItem'] > div {
-  flex: 1 1 auto;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
+/* Content div takes remaining space */
+.tiptap li[data-checked] > div,
+.tiptap li[data-type='taskItem'] > div {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-li[data-type='taskItem'] > div > p {
+.tiptap li[data-checked] > div > p,
+.tiptap li[data-type='taskItem'] > div > p {
   margin: 0 !important;
   padding: 0 !important;
   line-height: 1.4 !important;

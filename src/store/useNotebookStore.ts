@@ -250,9 +250,19 @@ export const useNotebookStore = create<NotebookStore>((set, get) => ({
   },
 
   deleteNotebook: async (id: string) => {
-    const now = Date.now();
-    // Soft delete notebook
-    await db.notebooks.update(id, { deletedAt: now, updatedAt: now });
+    // Hard-delete: remove notebook, its pages, and any associated blobs
+    const pagesToDelete = await db.pages.where('notebookId').equals(id).toArray();
+    const blobIds = pagesToDelete
+      .flatMap((p) => (p.objects || []).map((o) => o.blobId))
+      .filter(Boolean) as string[];
+
+    await db.transaction('rw', [db.notebooks, db.pages, db.blobs], async () => {
+      if (blobIds.length > 0) {
+        await db.blobs.bulkDelete(blobIds);
+      }
+      await db.pages.where('notebookId').equals(id).delete();
+      await db.notebooks.delete(id);
+    });
 
     const { notebooks, activeNotebookId } = get();
     const remaining = notebooks.filter((nb) => nb.id !== id);
@@ -418,8 +428,20 @@ export const useNotebookStore = create<NotebookStore>((set, get) => ({
   },
 
   deletePage: async (id: string) => {
-    const now = Date.now();
-    await db.pages.update(id, { deletedAt: now, updatedAt: now });
+    // Hard-delete: remove the page and its associated blobs
+    const page = await db.pages.get(id);
+    if (page) {
+      const blobIds = (page.objects || [])
+        .map((o) => o.blobId)
+        .filter(Boolean) as string[];
+
+      await db.transaction('rw', [db.pages, db.blobs], async () => {
+        if (blobIds.length > 0) {
+          await db.blobs.bulkDelete(blobIds);
+        }
+        await db.pages.delete(id);
+      });
+    }
 
     const { pages, activePageId } = get();
     const remaining = pages.filter((p) => p.id !== id);
