@@ -63,7 +63,7 @@ export const NotebookModal: React.FC<NotebookModalProps> = ({
               className="form-input"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Remote Job + Portfolio"
+              placeholder="e.g. Today's Work"
               autoFocus
               required
             />
