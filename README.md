@@ -92,12 +92,6 @@ Butter, Mint, Peach, Sky, Lilac, Rose — semi-transparent pastel markers for te
 ## 📦 Features
 
 ### Notebook Management
-- **5 seeded notebooks** on first run:
-  1. 💼 Remote Job + Portfolio (Sky)
-  2. 🤖 AI/Tech Instagram (Lilac)
-  3. 🎮 Gaming Instagram (Mint)
-  4. 🧠 AI Engineering Study (Peach)
-  5. ⚡ Quick Notes (Butter)
 - **Create** new notebooks with custom title, emoji, color swatch, and layout setting
 - **Edit** notebook title, emoji, color, layout via modal
 - **Delete** notebooks (soft-delete with `deletedAt` timestamp for future Trash recovery)
